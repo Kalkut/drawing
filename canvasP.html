@@ -1,0 +1,82 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mon projet canvas</title>
+  <link rel="stylesheet" href="/picker.css" /> 
+</meta>
+</head>
+<body>
+
+ <script src="/sandmin.js"></script>
+ <script src="/jquery.js"></script>
+ <script src="/Seed.js"></script>
+ <script src="/toDOM.js"></script>
+
+ <script src="/Buttons.js"></script>
+ <script src="/Input.js"></script>
+ <script src="/ColorGrid.js"></script>
+ <script src="/SlideBar.js"></script>
+ <script src="/CustomBar.js"></script>
+ <script src="/Square.js"></script>
+ <script src="/SubtlePicker.js"></script>
+ <script src="/colorfunc.js"></script>
+ <script src="/ColorPicker.js"></script>
+ <script src="/canvas.js"></script>
+
+ <script type="text/javascript">
+
+
+
+ sand.require('drawing/*', function (r) {
+
+   var Canvas = r.drawing.Canvas;
+   var ColorPicker = r.drawing.ColorPicker;
+
+
+    //tableaux de canvas de longueur 1 non attachés au DOM
+    //Initialisation des couleurs
+    //var colorPurple = "#cb3594";
+    //var colorGreen = "#659b41";
+    //var colorYellow = "#ffcf33";
+    //var colorBrown = "#986928";
+
+    johny =  new Canvas({ canvas : $('<canvas></canvas>').attr({width : 700, height : 225 })[0],
+			//idColor : ["purple","green","yellow","brown"],
+			//idSize : ["small","normal","large","huge"],
+			//idTool : ["crayon","marqueur","feutre","gomme"],
+			//tableColor : [colorPurple,colorGreen,colorYellow,colorBrown],
+			//tableSize : [2,5,8,10],
+			//tableTool : ["crayon","marqueur","feutre","gomme"],
+			curSize : 5,
+			curColor : "#cb3594",
+			curTool : "marqueur"})
+
+		//johny.setToolButtons();
+		johny.setUndoRedoButtons(); 
+		//johny.setSizeButtons();
+		
+
+
+	 var xmlhttp;
+   var options;
+   xmlhttp = new XMLHttpRequest();
+   xmlhttp.open("GET",'http://localhost:8000/color.json',true);
+   xmlhttp.send();
+   xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+      {   
+       options = JSON.parse(xmlhttp.responseText);
+       cp = new ColorPicker(options);
+       cp.on('getColor', function (color) { johny.curColor = color});
+       document.body.appendChild(johny.el); document.body.appendChild(cp.el);
+     }
+ }
+
+
+
+})
+
+
+</script>
+</body>
+</html>

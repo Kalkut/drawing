@@ -1,0 +1,10 @@
+{
+	"baseColors" : ["red","orange","yellow","green","blue","purple","turquoise","pink"] ,
+	"nbshades" : 3,
+	"size" : 30,
+	"barSize" : 12,
+	"squareSize": 30,
+	"classPrefix" : "berenger",
+	"custom" : true
+
+}
