@@ -33,6 +33,7 @@ sand.define('drawing/Canvas',['drawing/Buttons'], function (req) {
     context.stroke();
     context.closePath();
   }
+
   return Seed.extend({
 
     '+init' : function(obj) {
@@ -50,7 +51,7 @@ sand.define('drawing/Canvas',['drawing/Buttons'], function (req) {
          this.idTool = obj.idTool;
 
 
-         this.paths = [];
+         this.paths = obj.paths || [];
 
 
         	//Tableau des valeurs de couleur, taille et outils
@@ -120,6 +121,7 @@ sand.define('drawing/Canvas',['drawing/Buttons'], function (req) {
 
            this.clicking = false;
            trace(this.bg,this.paths.last())
+           this.fire('canvas:newPath',this.paths.last());
 
          }.bind(this)
 
@@ -209,7 +211,7 @@ setUndoRedoButtons : function(){
   }.bind(this);
 },
 
-setSizeButtons : function() {
+setSizeButtons : function () {
   this.sizeButtons = new Buttons(this.tableSize.length,this.idSize);
 
   for(var i = 0, n = this.tableSize.length; i < n; i++){
@@ -217,7 +219,14 @@ setSizeButtons : function() {
       this.curSize = this.tableSize[i];
     }.bind(this).curry(i);
   }
+},
+
+redraw : function () {
+  for (var i = 0; i < this.paths.length; i++){
+        trace(this.bg,this.paths[i])
+      }
 }
+
 
 });
 });
